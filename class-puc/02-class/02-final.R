@@ -32,19 +32,33 @@ createHistPlot = function(column, type) {
   gsub("\\s", "", plotFileName)
   
   jpeg(plotFileName)
-  hist(wineDataset[,column], main = nameHistPlot)
+  hist(wineDataset[,column], main = nameHistPlot, xlab=nameColumn, ylab="Frequência")
   dev.off()
 }
 
-createBoxPlot = function(column) {
+createBoxPlot = function(column, type) {
   nameColumn <- colnames(wineDataset)[column]
-  plotFileName <- paste0("box-", nameColumn, ".jpg")
+  nameHistPlot <- paste0("Wine ", type, " - ", nameColumn)
+  plotFileName <- paste0("boxPlot", "-", nameColumn, "-", type, ".jpg")
   
   # Remove space from the name
   gsub("\\s", "", plotFileName)
   
   jpeg(plotFileName)
   boxplot(wineDataset[,column], main = nameColumn)
+  dev.off()
+}
+
+createPlot = function(column, type) {
+  nameColumn <- colnames(wineDataset)[column]
+  nameHistPlot <- paste0("Wine ", type, " - ", nameColumn)
+  plotFileName <- paste0("boxPlot", "-", nameColumn, "-", type, ".jpg")
+  
+  # Remove space from the name
+  gsub("\\s", "", plotFileName)
+  
+  jpeg(plotFileName)
+  (wineDataset[,column], main = nameColumn)
   dev.off()
 }
 
@@ -79,9 +93,13 @@ sapply(1:ncol(wineType03), function(column) createHistPlot(column, '03'))
 sapply(1:ncol(wineDataset), function(column) createHistPlot(column, 'All'))
 
 # Plot every dataset - boxplot
-sapply(1:ncol(wineDataset), createBoxPlot)
+sapply(1:ncol(wineType01), function(column) createBoxPlot(column, '01'))
+sapply(1:ncol(wineType02), function(column) createBoxPlot(column, '02'))
+sapply(1:ncol(wineType03), function(column) createBoxPlot(column, '03'))
+sapply(1:ncol(wineDataset), function(column) createBoxPlot(column, 'All'))
 
-
-
-
-
+# Plot every dataset - plot
+plot(wineType01)
+plot(wineType02)
+plot(wineType03)
+plot(wineDataset)
