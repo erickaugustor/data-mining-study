@@ -23,15 +23,16 @@ addColNames <- function(dataset) {
   return(dataset)
 }
 
-createHistPlot = function(column) {
+createHistPlot = function(column, type) {
   nameColumn <- colnames(wineDataset)[column]
-  plotFileName <- paste0("hist-", nameColumn, ".jpg")
+  nameHistPlot <- paste0("Wine ", type, " - ", nameColumn)
+  plotFileName <- paste0("histPlot", "-", nameColumn, "-", type, ".jpg")
   
   # Remove space from the name
   gsub("\\s", "", plotFileName)
   
   jpeg(plotFileName)
-  hist(wineDataset[,column], main = nameColumn)
+  hist(wineDataset[,column], main = nameHistPlot)
   dev.off()
 }
 
@@ -50,37 +51,32 @@ createBoxPlot = function(column) {
 wineDataset <- read.csv("wine.data", na.strings = c(""))
 wineDataset <- addColNames(wineDataset)
 
-str(wineDataset)
-
-# wineDataset$Class <- factor(wineDataset$Class)
-# str(wineDataset)
-
-complete.cases(wineDataset)
-wineDataset[!complete.cases(wineDataset),]
-
+# Backup
 wineDatasetBackup <- wineDataset
 
 # Remove NA data from dataset
 wineDataset <- wineDataset[complete.cases(wineDataset),]
 
-# One:
-# mean(wineDataset$Magnesium)
+# Wine Type 01
+wineType01 <- wineDataset[wineDataset$Class == 1,]
 
-apply(wineDataset, 2, median, na.rm=TRUE)
+# Wine Type 02
+wineType02 <- wineDataset[wineDataset$Class == 2,]
+
+# Wine Type 03
+wineType03 <- wineDataset[wineDataset$Class == 3,]
+
+# Mean from wine dataset
+apply(wineType01, 2, mean, na.rm=TRUE)
+apply(wineType02, 2, mean, na.rm=TRUE)
+apply(wineType03, 2, mean, na.rm=TRUE)
 apply(wineDataset, 2, mean, na.rm=TRUE)
 
-colMeans(wineDataset)
-
-# One hist plot:
-# hist(wineDataset$Magnesium)
-
-# One salve fale:
-# jpeg(paste0("1", ".jpg"))
-# hist(wineDataset$Class)
-# dev.off()
-
 # Plot every dataset - histplot
-sapply(1:ncol(wineDataset), createHistPlot)
+sapply(1:ncol(wineType01), function(column) createHistPlot(column, '01'))
+sapply(1:ncol(wineType02), function(column) createHistPlot(column, '02'))
+sapply(1:ncol(wineType03), function(column) createHistPlot(column, '03'))
+sapply(1:ncol(wineDataset), function(column) createHistPlot(column, 'All'))
 
 # Plot every dataset - boxplot
 sapply(1:ncol(wineDataset), createBoxPlot)
