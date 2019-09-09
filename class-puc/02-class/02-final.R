@@ -1,4 +1,5 @@
-setwd("C:/Users/oeric/Desktop/Git/data-mining-study/class-puc/02-class")
+location <- getwd()
+setwd(location)
 
 library(tidyverse)
 
@@ -58,7 +59,7 @@ createPlot = function(column, type) {
   gsub("\\s", "", plotFileName)
   
   jpeg(plotFileName)
-  (wineDataset[,column], main = nameColumn)
+  (wineDataset[,column])
   dev.off()
 }
 
