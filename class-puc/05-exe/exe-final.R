@@ -83,6 +83,7 @@ histByHourLarceny <- ggplot(larcenyHoursFrequency, aes(x = Var1, y = Freq)) +
   ) +
   coord_flip()
 
+
 histByHoursSelectedCrimes <- ggplot(selectedCrimes, aes(HOUR)) +
   geom_histogram(
     aes(color = OFFENSE_CODE_GROUP, fill=OFFENSE_CODE_GROUP),
@@ -92,6 +93,7 @@ histByHoursSelectedCrimes <- ggplot(selectedCrimes, aes(HOUR)) +
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#BB1C00")) +
   scale_color_manual(values = c("#00AFBB", "#E7B800", "#BB1C00"))
 
+
 lineByHoursSelectedCrimes <- ggplot(selectedCrimes, aes(HOUR)) +
   geom_freqpoly(
     aes(color = OFFENSE_CODE_GROUP, linetype = OFFENSE_CODE_GROUP),
@@ -99,6 +101,7 @@ lineByHoursSelectedCrimes <- ggplot(selectedCrimes, aes(HOUR)) +
     size = 1.5
   ) +
   scale_color_manual(values = c("#00AFBB", "#E7B800", "#BB1C00"))
+
 
 # Show histograms
 histByHourDrugViolation
@@ -114,6 +117,7 @@ lineByHoursSelectedCrimes
 drugViolationDaysFrequency <- data.frame(table(drugViolation$DAY_OF_WEEK))
 homicideDaysFrequency <- data.frame(table(homicide$DAY_OF_WEEK))
 larcenyDaysFrequency <- data.frame(table(larceny$DAY_OF_WEEK))
+
 
 # Create the Histograms
 histByDaysDrugViolation <- ggplot(drugViolationDaysFrequency, aes(x = Var1, y = Freq)) +
@@ -182,6 +186,7 @@ histByDaysSelectedCrimes
 
 ####################################################################
 
+
 # Backup
 selectedCrimesValid <- selectedCrimes
 
@@ -191,6 +196,7 @@ selectedCrimesValid <- selectedCrimesValid[-c(which(selectedCrimesValid$Long>-10
 drugViolationValid <- selectedCrimesValid[selectedCrimesValid$OFFENSE_CODE_GROUP=="Drug Violation",]
 homicideValid <- selectedCrimesValid[selectedCrimesValid$OFFENSE_CODE_GROUP=="Homicide",]
 larcenyValid <- selectedCrimesValid[selectedCrimesValid$OFFENSE_CODE_GROUP=="Larceny",]
+
 
 mapDrugViolationPlot <- ggplot(data = drugViolationValid) + 
   geom_point(aes(x = Lat, y = Long, col = DISTRICT)) +
@@ -215,6 +221,7 @@ mapPlot <- ggplot(data = selectedCrimesValid) +
   )) +
   ggtitle("Map of crimes in Boston");
 
+
 # Show map
 mapDrugViolationPlot
 mapHomicidePlot
@@ -224,6 +231,49 @@ mapPlot
 
 ####################################################################
 
+
+mapTemporalPlotDrugViolation <- ggplot(drugViolationValid, aes(
+  Long,
+  Lat,
+  col=DISTRICT
+)) +
+  ggtitle("Map of Drug Violation in years") +
+  geom_point() + facet_grid(.~YEAR)
+
+mapTemporalPlotDrugViolation
+
+
+mapTemporalPlotHomicide <- ggplot(homicideValid, aes(
+  Long,
+  Lat,
+  col=DISTRICT
+)) +
+  ggtitle("Map of Homicide in years") +
+  geom_point() + facet_grid(.~YEAR)
+
+mapTemporalPlotHomicide
+
+
+mapTemporalPlotLarceny <- ggplot(larcenyValid, aes(
+  Long,
+  Lat,
+  col=DISTRICT
+)) +
+  ggtitle("Map of Larceny in years") +
+  geom_point() + facet_grid(.~YEAR)
+
+mapTemporalPlotLarceny
+
+
+mapTemporalPlot <- ggplot(selectedCrimesValid, aes(
+  Long,
+  Lat,
+  col=OFFENSE_CODE_GROUP
+)) +
+  ggtitle("Map of Crimes by years in Boston") +
+  geom_point() + facet_grid(.~YEAR)
+
+mapTemporalPlot
 
 temporalPlot <- ggplot(selectedCrimes, aes(YEAR, MONTH, col = OFFENSE_CODE_GROUP)) +
   geom_line()
