@@ -265,18 +265,76 @@ mapTemporalPlotLarceny <- ggplot(larcenyValid, aes(
 mapTemporalPlotLarceny
 
 
-mapTemporalPlot <- ggplot(selectedCrimesValid, aes(
-  Long,
-  Lat,
-  col=OFFENSE_CODE_GROUP
-)) +
-  ggtitle("Map of Crimes by years in Boston") +
-  geom_point() + facet_grid(.~YEAR)
+####################################################################
 
-mapTemporalPlot
+disrictFrequency <- data.frame(table(selectedCrimesValid$DISTRICT))
 
-temporalPlot <- ggplot(selectedCrimes, aes(YEAR, MONTH, col = OFFENSE_CODE_GROUP)) +
-  geom_line()
 
-temporalPlot
+histFrequencyDistrict <- ggplot(disrictFrequency, aes(x = Var1, y = Freq)) +
+  geom_bar(fill="#0073C2FF", stat = "identity") +
+  labs(
+    x="Districts",
+    y="Frequency of crimes per District",
+    title="Histogram about frequency of crimes in Boston districts"
+  ) + 
+  geom_hline(
+    aes(yintercept = mean(Freq), color="mean"),
+    show.legend = TRUE,
+    size=2
+  ) +
+  coord_flip()
+
+histFrequencyDistrict
+
+
+####################################################################
+
+
+informationsDistrictD4 <- selectedCrimesValid[selectedCrimesValid$DISTRICT=="D4",]
+disrictD4FrequencyByYear <- data.frame(table(informationsDistrictD4$YEAR))
+
+histFrequencyDistrictD4 <- ggplot(disrictD4FrequencyByYear, aes(x = Var1, y = Freq)) +
+  geom_bar(fill="#0073C2FF", stat = "identity") +
+  labs(
+    x="Years",
+    y="Frequency of crimes in district D4",
+    title="Histogram about frequency of crimes in district D4"
+  ) + 
+  geom_hline(
+    aes(yintercept = mean(Freq), color="mean"),
+    show.legend = TRUE,
+    size=2
+  ) +
+  coord_flip()
+
+histFrequencyDistrictD4
+
+####################################################################
+
+
+informationsDistrictA1 <- selectedCrimesValid[selectedCrimesValid$DISTRICT=="A1",]
+disrictA1FrequencyByYear <- data.frame(table(informationsDistrictA1$YEAR))
+
+histFrequencyDistrictaA1 <- ggplot(disrictA1FrequencyByYear, aes(x = Var1, y = Freq)) +
+  geom_bar(fill="#0073C2FF", stat = "identity") +
+  labs(
+    x="Years",
+    y="Frequency of crimes in district A1",
+    title="Histogram about frequency of crimes in district A1"
+  ) + 
+  geom_hline(
+    aes(yintercept = mean(Freq), color="mean"),
+    show.legend = TRUE,
+    size=2
+  ) +
+  coord_flip()
+
+histFrequencyDistrictaA1
+
+####################################################################
+
+
+
+
+
 
