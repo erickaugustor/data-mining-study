@@ -329,12 +329,77 @@ histFrequencyDistrictaA1 <- ggplot(disrictA1FrequencyByYear, aes(x = Var1, y = F
   ) +
   coord_flip()
 
+lineFrequecyA1 <- ggplot(disrictA1FrequencyByYear, aes(Var1, Freq)) + geom_line()
+
 histFrequencyDistrictaA1
+lineFrequecyA1
+
 
 ####################################################################
 
 
+informationsDistrictB2 <- selectedCrimesValid[selectedCrimesValid$DISTRICT=="B2",]
+disrictB2FrequencyByYear <- data.frame(table(informationsDistrictB2$YEAR))
+
+histFrequencyDistrictaB2 <- ggplot(disrictB2FrequencyByYear, aes(x = Var1, y = Freq)) +
+  geom_bar(fill="#0073C2FF", stat = "identity") +
+  labs(
+    x="Years",
+    y="Frequency of crimes in district B2",
+    title="Histogram about frequency of crimes in district B2"
+  ) + 
+  geom_hline(
+    aes(yintercept = mean(Freq), color="mean"),
+    show.legend = TRUE,
+    size=2
+  ) +
+  coord_flip()
+
+histFrequencyDistrictaB2
 
 
+####################################################################
 
+
+informationsDistrictC11 <- selectedCrimesValid[selectedCrimesValid$DISTRICT=="C11",]
+disrictC11FrequencyByYear <- data.frame(table(informationsDistrictC11$YEAR))
+
+histFrequencyDistrictaC11 <- ggplot(disrictC11FrequencyByYear, aes(x = Var1, y = Freq)) +
+  geom_bar(fill="#0073C2FF", stat = "identity") +
+  labs(
+    x="Years",
+    y="Frequency of crimes in district C11",
+    title="Histogram about frequency of crimes in district C11"
+  ) + 
+  geom_hline(
+    aes(yintercept = mean(Freq), color="mean"),
+    show.legend = TRUE,
+    size=2
+  ) +
+  coord_flip()
+
+histFrequencyDistrictaC11
+
+
+####################################################################
+
+
+informationsDistrictC6 <- selectedCrimesValid[selectedCrimesValid$DISTRICT=="C6",]
+disrictC6FrequencyByYear <- data.frame(table(informationsDistrictC6$YEAR))
+
+histFrequencyDistrictaC6 <- ggplot(disrictC6FrequencyByYear, aes(x = Var1, y = Freq)) +
+  geom_bar(fill="#0073C2FF", stat = "identity") +
+  labs(
+    x="Years",
+    y="Frequency of crimes in district C6",
+    title="Histogram about frequency of crimes in district C6"
+  ) + 
+  geom_hline(
+    aes(yintercept = mean(Freq), color="mean"),
+    show.legend = TRUE,
+    size=2
+  ) +
+  coord_flip()
+
+histFrequencyDistrictaC6
 
