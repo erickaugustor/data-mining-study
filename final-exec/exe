@@ -1,0 +1,13 @@
+getwd()
+location <- getwd()
+setwd(location)
+
+
+dataset <- read.csv("prouni-2014.csv", na.strings=c(""))
+dataset
+
+
+
+
+
+
